@@ -1,0 +1,7 @@
+{
+  "folders": [
+    { "name": "硬件",     "path": "hardware" },
+    { "name": "App",      "path": "app" },
+    { "name": "Server",   "path": "server" }
+  ]
+}
