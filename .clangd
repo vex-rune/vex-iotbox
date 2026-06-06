@@ -1,3 +1,8 @@
+Diagnostics:
+  Suppress:
+    - ovl_no_viable_subscript
+    - deprecated_declarations
+
 CompileFlags:
   CompilationDatabase: .
   Remove:

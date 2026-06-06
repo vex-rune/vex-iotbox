@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArduinoSettingsState">
+    <option name="espIdfPath" value="C:\Espressif\frameworks\esp-idf-v5.1.4" />
+    <option name="arduinoCliPath" value="C:\Users\Administrator\AppData\Local/Programs/Arduino IDE/resources/app/lib/backend/resources/arduino-cli.exe" />
+    <option name="comPort" value="COM6" />
+    <option name="serialPort" value="COM6" />
+    <option name="activeBackend" value="arduino-cli" />
+    <option name="platformioPath" value="C:\Users\Administrator\.platformio\penv\Scripts" />
+  </component>
+</project>
