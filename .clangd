@@ -1,0 +1,9 @@
+CompileFlags:
+  CompilationDatabase: .
+  Remove:
+    - -mlongcalls
+    - -fstrict-volatile-bitfields
+    - -fno-tree-switch-conversion
+    - -fno-jump-tables
+    - -ffunction-sections
+    - -fdata-sections
