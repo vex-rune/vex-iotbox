@@ -253,6 +253,7 @@ vex-iotbox/
 
 
 ```shell
+python -m esptool --port COM10 chip_id # 检查芯片 ID
 python -m platformio run -e hw_test -t upload --upload-port COM8  # 编译并烧录
 python -m platformio device monitor -e hw_test           # 查看串口日志
 ```
