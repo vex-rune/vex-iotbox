@@ -1,6 +1,28 @@
 /**
  * I2S 麦克风录音模块
+ *
  * 基于 INMP441 数字麦克风，使用 I2S_NUM_1 采集 PCM 数据
+ * 按住按钮期间持续录音，松开停止
+ *
+ * 用法：
+ *   // 1. 创建实例（按钮引脚, 麦克风引脚配置）
+ *   MicRecorder mic(11, {40, 41, 39, 42});
+ *
+ *   // 2. setup 中初始化 I2S 驱动
+ *   mic.begin();
+ *
+ *   // 3. 分配录音缓冲区（建议用 PSRAM）
+ *   size_t bufSize = 16000 * 2 * 10;  // 16kHz, 16bit, 10秒
+ *   uint8_t* buf = (uint8_t*)ps_malloc(bufSize);
+ *
+ *   // 4. 按住按钮录音，松开停止
+ *   if (mic.isPressed()) {
+ *       size_t bytes = mic.record(buf, bufSize);
+ *       // bytes = 实际录音字节数，可用于 STT 识别
+ *   }
+ *
+ * 注意：使用 I2S_NUM_1（I2S_NUM_0 被喇叭占用），采样率 16kHz
+ * 依赖：ESP32 内置 I2S 驱动
  */
 #pragma once
 

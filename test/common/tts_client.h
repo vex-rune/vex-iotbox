@@ -1,10 +1,30 @@
 /**
  * MiMo TTS 客户端
+ *
  * 调用小米 MiMo-V2.5-TTS 将文字转为语音 URL
  * API: https://api.xiaomimimo.com/v1/chat/completions
  *
- * TTS 使用 OpenAI 兼容格式，文本放在 assistant 消息中。
- * 输出格式指定为 mp3 URL，通过 Speaker 播放。
+ * 用法：
+ *   TtsClient tts;
+ *
+ *   String text = "门已打开";
+ *   String audioUrl;
+ *   if (tts.synthesize(text, audioUrl)) {
+ *       if (!audioUrl.startsWith("base64:")) {
+ *           // URL 模式：通过 Speaker 播放
+ *           speaker.playUrl(audioUrl);
+ *           while (speaker.isUrlPlaying()) {
+ *               speaker.loopUrl();
+ *               delay(1);
+ *           }
+ *       }
+ *   }
+ *
+ * 注意：
+ *   - 需要 WiFi 已连接
+ *   - 输出可能是 URL 或 base64 数据，需根据前缀判断
+ *   - 编译时需传入 -DMIMO_API_KEY=\"your_key\"
+ * 依赖：WiFiClientSecure（ESP32 内置）, Speaker（用于播放）
  */
 #pragma once
 

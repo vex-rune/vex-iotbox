@@ -8,16 +8,13 @@
  *   - 上电默认继电器关闭
  */
 
-// 引入 Arduino 基础库（提供 delay、digitalWrite 等函数）
+// 引入头文件
 #include <Arduino.h>
-// 引入公共库：WiFi 管理、MQTT 客户端、协议常量
 #include "common/wifi_manager.h"
 #include "common/mqtt_manager.h"
 #include "common/protocol.h"
+#include "common/message.h"
 
-// ── 引脚定义 ──
-// constexpr：编译期常量，等价于 #define PIN_RELAY 12
-// uint8_t：无符号 8 位整数（0~255），GPIO 编号不需要更大类型
 constexpr uint8_t PIN_RELAY = 12;
 
 // ── 全局对象 ──
@@ -41,10 +38,9 @@ bool lightOn = false; // 当前灯光状态，false = 关，true = 开
  * 第三个参数 true 表示 retained（保留消息），新订阅者能立即收到最新状态
  */
 void reportStatus() {
-    JsonDocument doc;
-    doc["type"] = TYPE_LIGHT_STATUS;  // "light.status"
-    doc["on"] = lightOn;              // true 或 false
-    mqtt.publishJson(topicStatus.c_str(), doc, true);
+    Message msg(TYPE_LIGHT_STATUS);
+    msg.set("on", lightOn);
+    mqtt.publishJson(topicStatus.c_str(), msg.doc, true);
 }
 
 /**
@@ -74,17 +70,14 @@ void setRelay(bool on) {
  * TYPE_LIGHT_ON 等：在 protocol.h 中定义的字符串常量，避免硬编码
  */
 void onMqttMessage(const char* topic, const char* payload, unsigned int length) {
-    JsonDocument doc;
-    if (deserializeJson(doc, payload)) return;  // 解析失败则忽略
+    Message msg;
+    if (!msg.parse(payload)) return;
 
-    const char* type = doc["type"];  // 取出 type 字段
-    if (!type) return;               // 如果 type 为空则忽略
-
-    if (strcmp(type, TYPE_LIGHT_ON) == 0) {        // 收到开灯指令
+    if (strcmp(msg.type(), TYPE_LIGHT_ON) == 0) {
         setRelay(true);
-    } else if (strcmp(type, TYPE_LIGHT_OFF) == 0) { // 收到关灯指令
+    } else if (strcmp(msg.type(), TYPE_LIGHT_OFF) == 0) {
         setRelay(false);
-    } else if (strcmp(type, TYPE_STATUS_GET) == 0) { // 收到状态查询
+    } else if (strcmp(msg.type(), TYPE_STATUS_GET) == 0) {
         reportStatus();
     }
 }

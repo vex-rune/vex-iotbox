@@ -2,6 +2,26 @@
 // ═══════════════════════════════════════
 // OLED 显示器（SSD1306，I2C，U8g2）
 // ═══════════════════════════════════════
+//
+// 接线：GND→GND, VCC→3.3V, SDA→GPIO, SCL→GPIO
+//
+// 用法：
+//   // 1. 创建实例（SDA引脚, SCL引脚, 宽, 高, 名称）
+//   Display oled(1, 2, 128, 32, "oled");
+//
+//   // 2. setup 中初始化（屏幕显示 "OLED Ready"）
+//   oled.begin();
+//
+//   // 3. 显示文字（128x32 屏幕，中文字体每行约 8 个汉字）
+//   oled.showText("25.3C 60%");     // 默认位置 (0, 16)
+//   oled.showText("你好", 0, 16);    // 指定位置
+//
+//   // 4. 关闭/唤醒屏幕
+//   oled.close();    // 省电模式
+//   oled.open();     // 恢复显示
+//
+// 注意：showText() 每次调用会清屏并重绘，不支持多行叠加
+// 依赖：olikraus/U8g2
 
 #include "clib/u8g2.h"
 #include <Arduino.h>

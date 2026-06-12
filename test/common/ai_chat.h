@@ -1,7 +1,20 @@
 /**
  * MiMo Chat 客户端
+ *
  * 调用小米 MiMo ChatCompletion API 进行文本问答
  * API: https://api.xiaomimimo.com/v1/chat/completions
+ *
+ * 用法：
+ *   AiChat aiChat;
+ *
+ *   String question = "今天天气怎么样？";
+ *   String answer;
+ *   if (aiChat.ask(question, answer)) {
+ *       Serial.println(answer);  // AI 回答
+ *   }
+ *
+ * 注意：需要 WiFi 已连接，编译时需传入 -DMIMO_API_KEY=\"your_key\"
+ * 依赖：WiFiClientSecure（ESP32 内置）
  */
 #pragma once
 

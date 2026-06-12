@@ -3,5 +3,7 @@
     "clangd.arguments": [
         "--compile-commands-dir=${workspaceFolder}",
         "--query-driver=${env:USERPROFILE}/.platformio/packages/toolchain-xtensa-esp32s3/bin/xtensa-esp32s3-elf-*"
-    ]
+    ],
+    "commentTranslate.targetLanguage": "zh-CN",
+    "commentTranslate.hover.enabled": true
 }

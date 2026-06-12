@@ -1,10 +1,24 @@
 /**
  * MiMo 语音识别客户端（ASR）
+ *
  * 调用小米 MiMo-V2.5-ASR 将 PCM 音频转为文字
  * API: https://api.xiaomimimo.com/v1/audio/transcriptions
  *
- * 注意：MiMo ASR 的具体端点格式可能需要根据实际文档调整。
- * 当前假设为 OpenAI 兼容格式（multipart/form-data）。
+ * 用法：
+ *   SttClient stt;
+ *
+ *   // pcmData：MicRecorder.record() 返回的 PCM 数据
+ *   // pcmLen：数据字节数
+ *   String text;
+ *   if (stt.recognize(pcmData, pcmLen, text)) {
+ *       Serial.println(text);  // 识别结果，如 "打开客厅灯"
+ *   }
+ *
+ * 注意：
+ *   - 需要 WiFi 已连接
+ *   - PCM 格式：16kHz, 16bit, 单声道（左声道）
+ *   - 编译时需传入 -DMIMO_API_KEY=\"your_key\"
+ * 依赖：WiFiClientSecure（ESP32 内置）
  */
 #pragma once
 

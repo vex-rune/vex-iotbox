@@ -1,7 +1,30 @@
 #pragma once
 // ═══════════════════════════════════════
-// 板载 RGB LED（WS2812）
+// 板载 RGB LED（WS2812 / NeoPixel）
 // ═══════════════════════════════════════
+//
+// 接线：单线协议，GPIO 直驱 LED DIN 引脚
+//
+// 用法：
+//   // 1. 创建实例（引脚）
+//   RgbLed rgb(48);
+//
+//   // 2. setup 中初始化（亮度 0-255）
+//   rgb.begin(50);
+//
+//   // 3. 设置颜色
+//   rgb.setColor(255, 0, 0);    // 红色
+//   rgb.setColor(0, 255, 0);    // 绿色
+//   rgb.off();                   // 关闭
+//
+//   // 4. 彩虹轮转（非阻塞，每次调用前进一帧，需在 loop 中持续调用）
+//   rgb.rainbow();
+//
+//   // 5. 状态 JSON
+//   String json = rgb.getStatusJson();
+//   // → {"pin":48,"r":255,"g":0,"b":0}
+//
+// 依赖：adafruit/Adafruit NeoPixel
 
 #include <Arduino.h>
 #include <Adafruit_NeoPixel.h>
@@ -10,7 +33,7 @@ class RgbLed {
 public:
   RgbLed(int pin) : pin_(pin), strip_(1, pin, NEO_GRB + NEO_KHZ800) {}
 
-  /// 初始化，设置亮度 0-255
+  /// 初始化，设置亮度 0-255，必须在 setup() 中调用
   void begin(uint8_t brightness = 50) {
     strip_.begin();
     strip_.setBrightness(brightness);
